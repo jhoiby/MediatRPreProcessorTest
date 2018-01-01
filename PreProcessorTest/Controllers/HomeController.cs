@@ -24,8 +24,6 @@ namespace PreProcessorTest.Controllers
 
         public async Task<IActionResult> Index()
         {
-            string result = "Result initialized but not modified.";
-
             CommonResponse commandResult = await _mediator.Send(new MyCommand());
             CommonResponse queryResult = await _mediator.Send(new MyQuery());
 
