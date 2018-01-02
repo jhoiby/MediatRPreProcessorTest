@@ -13,6 +13,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using PreProcessorTest.Handlers;
+using PreProcessorTest.Messages;
+using PreProcessorTest.Messages.Commands;
 using PreProcessorTest.Pipeline;
 using Serilog;
 
@@ -66,11 +68,22 @@ namespace PreProcessorTest
                     .AsImplementedInterfaces();
             }
 
-            // Pipeline pre/post processors
+            // Pipeline pre/post processors, from MediatR documentation
             builder.RegisterGeneric(typeof(RequestPostProcessorBehavior<,>)).As(typeof(IPipelineBehavior<,>));
             builder.RegisterGeneric(typeof(RequestPreProcessorBehavior<,>)).As(typeof(IPipelineBehavior<,>));
             builder.RegisterGeneric(typeof(GenericRequestPreProcessor<>)).As(typeof(IRequestPreProcessor<>));
+
+
+
+            // THE LINE AT ISSUE - Runs for ALL requests. Need to find way to run for commands only.
+            // SEE: https://stackoverflow.com/questions/48045989/executing-mediatr-preprocessor-only-for-specific-interface-types-commands
+
             builder.RegisterGeneric(typeof(MyCommandPreProcessor<>)).As(typeof(IRequestPreProcessor<>));
+
+
+
+
+            // Additional registration options provided by MediatR documentation
             // builder.RegisterGeneric(typeof(GenericRequestPostProcessor<,>)).As(typeof(IRequestPostProcessor<,>));
             // builder.RegisterGeneric(typeof(GenericPipelineBehavior<,>)).As(typeof(IPipelineBehavior<,>));
 

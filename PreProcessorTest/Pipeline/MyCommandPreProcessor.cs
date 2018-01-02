@@ -5,6 +5,9 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using MediatR;
+using PreProcessorTest.Messages;
+using PreProcessorTest.Messages.Commands;
 
 namespace PreProcessorTest.Pipeline
 {
@@ -13,7 +16,6 @@ namespace PreProcessorTest.Pipeline
         public Task Process(TRequest request, CancellationToken cancellationToken)
         {
             Debug.WriteLine("***** MYCOMMAND PREPROCESSOR CALLED *****");
-            Debug.WriteLine("     * Type of request: " + typeof(TRequest));
 
             return Task.CompletedTask;
         }
